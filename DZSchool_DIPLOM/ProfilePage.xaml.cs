@@ -44,7 +44,7 @@ namespace DZSchool_DIPLOM
                 myBitmapImage.EndInit();
             }
             else
-                if ((reward > 2) && (reward <= 3))
+                if ((reward > 2) && (reward <= 3.45))
             {
                 Reward.Text = "Ты можешь лучше, но в конце месяца получишь конфетку";
                 RewardName.Text = "Твоя награда - конфетка";
@@ -52,7 +52,7 @@ namespace DZSchool_DIPLOM
                 myBitmapImage.DecodePixelWidth = 200;
                 myBitmapImage.EndInit();
             }
-            else if ((reward > 3) && (reward <= 4))
+            else if ((reward > 3.45) && (reward <= 4))
             {
                 Reward.Text = "Ты молодец, но еще есть куда расти, в конце месяца ты получишь набор для учебы";
                 RewardName.Text = "Твоя награда - набор из: 2 тетради 48 листов, ручка синяя c дизайном на выбор!";
@@ -68,7 +68,7 @@ namespace DZSchool_DIPLOM
                 myBitmapImage.DecodePixelWidth = 200;
                 myBitmapImage.EndInit();
             }
-            myImage.Source = myBitmapImage;
+            ImageReward.Source = myBitmapImage;
         }
     }
 }
