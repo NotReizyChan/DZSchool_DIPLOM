@@ -1,0 +1,575 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище SchoolDZModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Pupil" Type="int" />
+          <Property Name="Timetable" Type="int" />
+          <Property Name="idteacher" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MarksOfStudent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Subject" Type="nchar" MaxLength="30" />
+          <Property Name="Mark" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pupil">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="idMarks" Type="int" />
+          <Property Name="AvgMarks" Type="float" />
+          <Property Name="Fio" Type="nchar" MaxLength="50" />
+          <Property Name="idInf" Type="int" />
+          <Property Name="FatherFio" Type="nchar" MaxLength="50" />
+          <Property Name="MotherFio" Type="nchar" MaxLength="50" />
+          <Property Name="ContactNumber" Type="nchar" MaxLength="15" />
+          <Property Name="Password" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PupilInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="AvgMarks" Type="float" />
+          <Property Name="Game" Type="nchar" MaxLength="50" />
+          <Property Name="Lvl" Type="float" />
+        </EntityType>
+        <EntityType Name="subjects">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="NameOfSubject" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Fio" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="idPasport" Type="int" Nullable="false" />
+          <Property Name="Specialization" Type="nchar" MaxLength="50" />
+          <Property Name="DateOfHiring" Type="date" />
+          <Property Name="Password" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeachersPasport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Seria" Type="nchar" MaxLength="12" Nullable="false" />
+          <Property Name="Number" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="WhoIssued" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="WhenIssued" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeTable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="idSubject" Type="int" />
+          <Property Name="Class" Type="nchar" MaxLength="10" />
+          <Property Name="Classroom" Type="nchar" MaxLength="15" />
+        </EntityType>
+        <Association Name="FK_Classes_Pupil">
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="Pupil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="idteacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_TimeTable">
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="Timetable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_MarksOfStudent">
+          <End Role="MarksOfStudent" Type="Self.MarksOfStudent" Multiplicity="0..1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarksOfStudent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="idMarks" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_PupilInfo">
+          <End Role="PupilInfo" Type="Self.PupilInfo" Multiplicity="0..1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PupilInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="idInf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teachers_TeachersPasport">
+          <End Role="TeachersPasport" Type="Self.TeachersPasport" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeachersPasport">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="idPasport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_subjects">
+          <End Role="subjects" Type="Self.subjects" Multiplicity="0..1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="idSubject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SchoolDZModelContainer">
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MarksOfStudent" EntityType="Self.MarksOfStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pupil" EntityType="Self.Pupil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PupilInfo" EntityType="Self.PupilInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subjects" EntityType="Self.subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeachersPasport" EntityType="Self.TeachersPasport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTable" EntityType="Self.TimeTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Classes_Pupil" Association="Self.FK_Classes_Pupil">
+            <End Role="Pupil" EntitySet="Pupil" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_Teachers" Association="Self.FK_Classes_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_TimeTable" Association="Self.FK_Classes_TimeTable">
+            <End Role="TimeTable" EntitySet="TimeTable" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_MarksOfStudent" Association="Self.FK_Pupil_MarksOfStudent">
+            <End Role="MarksOfStudent" EntitySet="MarksOfStudent" />
+            <End Role="Pupil" EntitySet="Pupil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_PupilInfo" Association="Self.FK_Pupil_PupilInfo">
+            <End Role="PupilInfo" EntitySet="PupilInfo" />
+            <End Role="Pupil" EntitySet="Pupil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teachers_TeachersPasport" Association="Self.FK_Teachers_TeachersPasport">
+            <End Role="TeachersPasport" EntitySet="TeachersPasport" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_subjects" Association="Self.FK_TimeTable_subjects">
+            <End Role="subjects" EntitySet="subjects" />
+            <End Role="TimeTable" EntitySet="TimeTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolDZModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Pupil" Type="Int32" />
+          <Property Name="Timetable" Type="Int32" />
+          <Property Name="idteacher" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pupil1" Relationship="Self.FK_Classes_Pupil" FromRole="Classes" ToRole="Pupil" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK_Classes_Teachers" FromRole="Classes" ToRole="Teachers" />
+          <NavigationProperty Name="TimeTable1" Relationship="Self.FK_Classes_TimeTable" FromRole="Classes" ToRole="TimeTable" />
+        </EntityType>
+        <EntityType Name="MarksOfStudent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Subject" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Mark" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pupil" Relationship="Self.FK_Pupil_MarksOfStudent" FromRole="MarksOfStudent" ToRole="Pupil" />
+        </EntityType>
+        <EntityType Name="Pupil">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="idMarks" Type="Int32" />
+          <Property Name="AvgMarks" Type="Double" />
+          <Property Name="Fio" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="idInf" Type="Int32" />
+          <Property Name="FatherFio" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="MotherFio" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="ContactNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK_Classes_Pupil" FromRole="Pupil" ToRole="Classes" />
+          <NavigationProperty Name="MarksOfStudent" Relationship="Self.FK_Pupil_MarksOfStudent" FromRole="Pupil" ToRole="MarksOfStudent" />
+          <NavigationProperty Name="PupilInfo" Relationship="Self.FK_Pupil_PupilInfo" FromRole="Pupil" ToRole="PupilInfo" />
+        </EntityType>
+        <EntityType Name="PupilInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="AvgMarks" Type="Double" />
+          <Property Name="Game" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Lvl" Type="Double" />
+          <NavigationProperty Name="Pupil" Relationship="Self.FK_Pupil_PupilInfo" FromRole="PupilInfo" ToRole="Pupil" />
+        </EntityType>
+        <EntityType Name="subjects">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="NameOfSubject" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TimeTable" Relationship="Self.FK_TimeTable_subjects" FromRole="subjects" ToRole="TimeTable" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Fio" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="idPasport" Type="Int32" Nullable="false" />
+          <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="DateOfHiring" Type="DateTime" Precision="0" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK_Classes_Teachers" FromRole="Teachers" ToRole="Classes" />
+          <NavigationProperty Name="TeachersPasport" Relationship="Self.FK_Teachers_TeachersPasport" FromRole="Teachers" ToRole="TeachersPasport" />
+        </EntityType>
+        <EntityType Name="TeachersPasport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Seria" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="WhoIssued" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="WhenIssued" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK_Teachers_TeachersPasport" FromRole="TeachersPasport" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="TimeTable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="idSubject" Type="Int32" />
+          <Property Name="Class" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Classroom" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK_Classes_TimeTable" FromRole="TimeTable" ToRole="Classes" />
+          <NavigationProperty Name="subjects" Relationship="Self.FK_TimeTable_subjects" FromRole="TimeTable" ToRole="subjects" />
+        </EntityType>
+        <Association Name="FK_Classes_Pupil">
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="Pupil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="idteacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_TimeTable">
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="Timetable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_MarksOfStudent">
+          <End Role="MarksOfStudent" Type="Self.MarksOfStudent" Multiplicity="0..1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarksOfStudent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="idMarks" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupil_PupilInfo">
+          <End Role="PupilInfo" Type="Self.PupilInfo" Multiplicity="0..1" />
+          <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PupilInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pupil">
+              <PropertyRef Name="idInf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_subjects">
+          <End Role="subjects" Type="Self.subjects" Multiplicity="0..1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="idSubject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teachers_TeachersPasport">
+          <End Role="TeachersPasport" Type="Self.TeachersPasport" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeachersPasport">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="idPasport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDZEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Classes" EntityType="Self.Classes" />
+          <EntitySet Name="MarksOfStudent" EntityType="Self.MarksOfStudent" />
+          <EntitySet Name="Pupil" EntityType="Self.Pupil" />
+          <EntitySet Name="PupilInfo" EntityType="Self.PupilInfo" />
+          <EntitySet Name="subjects" EntityType="Self.subjects" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" />
+          <EntitySet Name="TeachersPasport" EntityType="Self.TeachersPasport" />
+          <EntitySet Name="TimeTable" EntityType="Self.TimeTable" />
+          <AssociationSet Name="FK_Classes_Pupil" Association="Self.FK_Classes_Pupil">
+            <End Role="Pupil" EntitySet="Pupil" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_Teachers" Association="Self.FK_Classes_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_TimeTable" Association="Self.FK_Classes_TimeTable">
+            <End Role="TimeTable" EntitySet="TimeTable" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_MarksOfStudent" Association="Self.FK_Pupil_MarksOfStudent">
+            <End Role="MarksOfStudent" EntitySet="MarksOfStudent" />
+            <End Role="Pupil" EntitySet="Pupil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupil_PupilInfo" Association="Self.FK_Pupil_PupilInfo">
+            <End Role="PupilInfo" EntitySet="PupilInfo" />
+            <End Role="Pupil" EntitySet="Pupil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_subjects" Association="Self.FK_TimeTable_subjects">
+            <End Role="subjects" EntitySet="subjects" />
+            <End Role="TimeTable" EntitySet="TimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teachers_TeachersPasport" Association="Self.FK_Teachers_TeachersPasport">
+            <End Role="TeachersPasport" EntitySet="TeachersPasport" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SchoolDZModelContainer" CdmEntityContainer="SchoolDZEntities">
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="SchoolDZModel.Classes">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Pupil" ColumnName="Pupil" />
+                <ScalarProperty Name="Timetable" ColumnName="Timetable" />
+                <ScalarProperty Name="idteacher" ColumnName="idteacher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MarksOfStudent">
+            <EntityTypeMapping TypeName="SchoolDZModel.MarksOfStudent">
+              <MappingFragment StoreEntitySet="MarksOfStudent">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pupil">
+            <EntityTypeMapping TypeName="SchoolDZModel.Pupil">
+              <MappingFragment StoreEntitySet="Pupil">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idMarks" ColumnName="idMarks" />
+                <ScalarProperty Name="AvgMarks" ColumnName="AvgMarks" />
+                <ScalarProperty Name="Fio" ColumnName="Fio" />
+                <ScalarProperty Name="idInf" ColumnName="idInf" />
+                <ScalarProperty Name="FatherFio" ColumnName="FatherFio" />
+                <ScalarProperty Name="MotherFio" ColumnName="MotherFio" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PupilInfo">
+            <EntityTypeMapping TypeName="SchoolDZModel.PupilInfo">
+              <MappingFragment StoreEntitySet="PupilInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="AvgMarks" ColumnName="AvgMarks" />
+                <ScalarProperty Name="Game" ColumnName="Game" />
+                <ScalarProperty Name="Lvl" ColumnName="Lvl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subjects">
+            <EntityTypeMapping TypeName="SchoolDZModel.subjects">
+              <MappingFragment StoreEntitySet="subjects">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameOfSubject" ColumnName="NameOfSubject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SchoolDZModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="SchoolDZModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Fio" ColumnName="Fio" />
+                <ScalarProperty Name="idPasport" ColumnName="idPasport" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="DateOfHiring" ColumnName="DateOfHiring" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeachersPasport">
+            <EntityTypeMapping TypeName="SchoolDZModel.TeachersPasport">
+              <MappingFragment StoreEntitySet="TeachersPasport">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Seria" ColumnName="Seria" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="WhoIssued" ColumnName="WhoIssued" />
+                <ScalarProperty Name="WhenIssued" ColumnName="WhenIssued" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeTable">
+            <EntityTypeMapping TypeName="SchoolDZModel.TimeTable">
+              <MappingFragment StoreEntitySet="TimeTable">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idSubject" ColumnName="idSubject" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Classroom" ColumnName="Classroom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
