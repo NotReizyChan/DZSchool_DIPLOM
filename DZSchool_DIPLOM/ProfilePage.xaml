@@ -26,8 +26,12 @@
         <Button Grid.Row="4" Grid.ColumnSpan="1" Margin="5" Width="200" Content="аа"/>
         <ProgressBar Grid.Row="1" Grid.Column="1" Margin="10" Minimum="1" Maximum="5" Name="lvlbar"/>
         <Label Content="Ваша награда в этом месяце - " Grid.Row="2" Margin="10" HorizontalAlignment="Right"/>
-        <Label Content="" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Name="Reward"/>
-        <Label Content="" Name="RewardName" Grid.Row="3" Grid.Column="0" Margin="10" Height="35" Width="250" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Image Grid.Column="1" Grid.Row="3" Name="ImageReward"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Left" Name="Reward" />
+        <TextBlock Name="RewardName" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Margin="10" Height="35" Width="250" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image Grid.Column="1" Grid.Row="3" Name="ImageReward">
+            <Image.Source>
+                <BitmapImage DecodePixelWidth="200"  UriSource="" />
+            </Image.Source>
+        </Image>
     </Grid>
 </Page>
