@@ -12,6 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="350"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -45,5 +46,18 @@
         <Label Content="Пароль" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="9"/>
         <TextBox Name="Passwordbox" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="9" Margin="10" Height="25" Width="300"/>
         <Button Grid.Row="10" Grid.ColumnSpan="2" Margin="10" Width="250" Content="Сохранить" Click="SaveMaster"/>
+
+        <Label Content="Калькулятор для среднего балла" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="3" Grid.Column="2" Grid.RowSpan="5">
+            <Label Content="Введите оценку" />
+            <TextBox Name="markbox" />
+            
+            <Button Name="ForMarks" Content="Прибавить" Width="150" Click="ForMarksClick"/>
+            <Button Name="ForMarksResult" Content="Просмотреть результат" Width="150" Click="ForResult"/>
+            <Button Name="ForMarksDelete" Content="Отчистить" Width="150" Click="ForDelete"/>
+            <Label Content="Результат"/>
+            <TextBlock Name="ResultBlock"/>
+        </StackPanel>
+        
     </Grid>
 </Page>

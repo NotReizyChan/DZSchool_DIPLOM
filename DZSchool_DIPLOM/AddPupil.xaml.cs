@@ -31,6 +31,7 @@ namespace DZSchool_DIPLOM
 
         Pupil pupl;
 
+
         private void SaveMaster(object sender, RoutedEventArgs e)
         {
             if (flag == true)
@@ -77,6 +78,33 @@ namespace DZSchool_DIPLOM
             Motherbox.Text = pupil.MotherFio.ToString();
             Passwordbox.Text = pupil.Password.ToString();
             flag = false;
+        }
+
+        double Mark = 0;
+        double resultMark = 0;
+        double step = 0;
+        private void ForMarksClick(object sender, RoutedEventArgs e)
+        {
+            Mark = Convert.ToDouble(markbox.Text);
+            resultMark += Mark;
+            step += 1;
+            markbox.Text ="";
+            ResultBlock.Text = Convert.ToString(resultMark);
+        }
+
+        private void ForResult(object sender, RoutedEventArgs e)
+        {
+            resultMark /= step;
+            ResultBlock.Text = Convert.ToString(resultMark);
+        }
+
+        private void ForDelete(object sender, RoutedEventArgs e)
+        {
+            ResultBlock.Text = "";
+            markbox.Text = "";
+            step = 0;
+            resultMark = 0;
+            Mark = 0;
         }
     }
 }
